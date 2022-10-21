@@ -1,0 +1,14 @@
+﻿@inject HistoricalNavigator hisNav;
+@inject IJSRuntime Js
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var delegatorRef = DotNetObjectReference.Create(hisNav);
+
+            await Js.InvokeVoidAsync("installNavigationDelegation", delegatorRef);
+        }
+    }
+}

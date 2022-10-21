@@ -1,0 +1,25 @@
+﻿@inherits LayoutComponentBase
+@inject HistoricalNavigator HisNav
+@inject NavigationManager NavMan
+
+<PageTitle>BlazorApp6</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <div>
+        Index in history: @NavMan.HistoryEntryState
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>

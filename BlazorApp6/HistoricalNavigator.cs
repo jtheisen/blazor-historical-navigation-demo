@@ -57,9 +57,9 @@ public class HistoricalNavigator : INotifyPropertyChanged
         return routeData;
     }
 
-    public RouteData? GetPreviousRoutData()
+    public RouteData? GetRelativeRoutData(Int32 offset)
     {
-        var i = CurrentHistoryIndex - 1;
+        var i = CurrentHistoryIndex + offset;
 
         if (i < 0 || i >= history.Count) return null;
 

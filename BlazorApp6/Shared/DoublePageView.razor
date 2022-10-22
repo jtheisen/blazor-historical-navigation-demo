@@ -1,15 +1,21 @@
 ﻿@inject HistoricalNavigator HisNav
 
-<div class="d-flex gap-4">
-    @{
-        var hi = HisNav.CurrentHistoryIndex;
-    }
+@{
+    var hi = currentHistoryIndex;
+}
 
-    @for (var i = hi - 1; i <= hi; ++i)
+<div>@previousHistoryIndex</div>
+
+<div class="double-page @AnimationClass">
+    <div class="dummy">&nbsp;</div>
+
+    @for (var i = hi - 1; i <= hi + 1; ++i)
     {
-        var rd = i == hi ? HisNav.SetCurrentRouteData(RouteData) : HisNav.GetPreviousRoutData();
+        var offset = i - hi;
 
-        <div @key="@i" class="flex-1">
+        var rd = i == hi ? HisNav.SetCurrentRouteData(RouteData) : HisNav.GetRelativeRoutData(offset);
+
+        <div @key="@i" class="flex-1" style="--page-offset: @offset">
             @if (rd != null)
             {
                 <div>@i</div>
@@ -22,4 +28,19 @@
 @code {
     [Parameter]
     public RouteData? RouteData { get; set; } = null!;
+
+    public String AnimationClass => currentHistoryIndex < previousHistoryIndex ? "move-right" : "move-left";
+
+    Int32 previousHistoryIndex, currentHistoryIndex;
+
+    protected override void OnParametersSet()
+    {
+        var hi = HisNav.CurrentHistoryIndex;
+
+        if (hi != currentHistoryIndex)
+        {
+            previousHistoryIndex = currentHistoryIndex;
+            currentHistoryIndex = hi;
+        }
+    }
 }

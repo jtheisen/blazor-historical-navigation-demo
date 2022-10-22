@@ -1,0 +1,45 @@
+﻿.double-page {
+    display: grid;
+    overflow: hidden;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    animation-duration: .2s;
+}
+
+.double-page > * {
+    grid-row: 1;
+    grid-column: 2;
+
+    transform: translateX(calc(100% * var(--page-offset)));
+}
+
+    .double-page.move-right {
+        animation-name: move-right;
+    }
+
+    .double-page.move-left {
+        animation-name: move-left;
+    }
+
+@keyframes move-right {
+    from {
+        transform: translateX(-100%)
+    }
+
+    to {
+        transform: translateX(0)
+    }
+}
+
+@keyframes move-left {
+    from {
+        transform: translateX(100%)
+    }
+
+    to {
+        transform: translateX(0)
+    }
+}
+
+.double-page > .dummy {
+    grid-column: 1;
+}

@@ -1,8 +1,5 @@
-﻿@inherits LayoutComponentBase
-@inject HistoricalNavigator HisNav
+﻿@inject HistoricalNavigator HisNav
 @inject NavigationManager NavMan
-
-<PageTitle>BlazorApp6</PageTitle>
 
 <div class="page">
     <div class="sidebar">
@@ -17,7 +14,12 @@
         </div>
 
         <article class="content px-4">
-            @Body
+            @ChildContent
         </article>
     </main>
 </div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

@@ -1,13 +1,29 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
+﻿@inject HistoricalNavigator HisNav
+
+@{
+    var hi = HisNav.CurrentHistoryIndex;
+}
+
+<Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <MainLayout>
+            <div class="d-flex gap-4">
+                <div @key="@(hi - 1)" class="flex-fill">
+                    @if (HisNav.GetPreviousRoutData() is RouteData previousRouteData)
+                    {
+                        <RouteView RouteData="@previousRouteData" />
+                    }
+                </div>
+                <div @key="@hi" class="flex-fill">
+                    <RouteView RouteData="@HisNav.SetCurrentRouteData(routeData)" />
+                </div>
+            </div>
+        </MainLayout>
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
     </Found>
     <NotFound>
         <PageTitle>Not found</PageTitle>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p role="alert">Sorry, there's nothing at this address.</p>
-        </LayoutView>
+        <p role="alert">Sorry, there's nothing at this address.</p>
     </NotFound>
 </Router>
 

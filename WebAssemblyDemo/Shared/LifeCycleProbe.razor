@@ -1,0 +1,20 @@
+﻿
+@{
+    var renderId = Guid.NewGuid();
+}
+
+<div>
+    <dl>
+        <dt>run id</dt>
+        <dd>@runId</dd>
+        <dt>render id</dt>
+        <dd>@renderId</dd>
+    </dl>
+</div>
+
+@code {
+    Guid runId = Guid.NewGuid();
+
+    [Parameter]
+    public RouteData RouteData { get; set; }
+}

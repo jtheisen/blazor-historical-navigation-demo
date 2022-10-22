@@ -3,7 +3,7 @@ using Microsoft.JSInterop;
 using System.ComponentModel;
 using RouteData = Microsoft.AspNetCore.Components.RouteData;
 
-namespace BlazorApp6;
+namespace WebAssemblyDemo;
 
 public struct HistoryState
 {

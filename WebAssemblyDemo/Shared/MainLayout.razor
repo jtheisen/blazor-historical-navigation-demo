@@ -1,0 +1,25 @@
+﻿@inject HistoricalNavigator HisNav
+@inject NavigationManager NavMan
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <div>
+                Index in history: @NavMan.HistoryEntryState
+            </div>
+        </div>
+
+        <article class="content px-4">
+            @ChildContent
+        </article>
+    </main>
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

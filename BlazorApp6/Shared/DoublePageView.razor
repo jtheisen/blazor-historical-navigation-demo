@@ -1,46 +1,41 @@
 ﻿@inject HistoricalNavigator HisNav
 
-@{
-    var hi = currentHistoryIndex;
-}
+<div class="double-page">
+    <div class="inner @AnimationClass">
+        @for (var i = chi - 1; i <= chi + 1; ++i)
+        {
+            var offset = i - chi;
 
-<div>@previousHistoryIndex</div>
+            var rd = i == chi ? HisNav.SetCurrentRouteData(RouteData) : HisNav.GetRelativeRoutData(offset);
 
-<div class="double-page @AnimationClass">
-    <div class="dummy">&nbsp;</div>
-
-    @for (var i = hi - 1; i <= hi + 1; ++i)
-    {
-        var offset = i - hi;
-
-        var rd = i == hi ? HisNav.SetCurrentRouteData(RouteData) : HisNav.GetRelativeRoutData(offset);
-
-        <div @key="@i" class="flex-1" style="--page-offset: @offset">
-            @if (rd != null)
-            {
-                <div>@i</div>
-                <RouteView RouteData="@rd" />
-            }
-        </div>
-    }
+            <div @key="@i" class="flex-1" style="--page-offset: @offset">
+                @if (rd != null)
+                {
+                    <RouteView RouteData="@rd" />
+                }
+            </div>
+        }
+    </div>
 </div>
 
 @code {
     [Parameter]
     public RouteData? RouteData { get; set; } = null!;
 
-    public String AnimationClass => currentHistoryIndex < previousHistoryIndex ? "move-right" : "move-left";
+    public String AnimationClass => chi < phi ? $"move-right-{AlternatorSuffix}" : $"move-left-{AlternatorSuffix}";
 
-    Int32 previousHistoryIndex, currentHistoryIndex;
+    Int32 AlternatorSuffix => chi % 2;
+
+    Int32 phi, chi;
 
     protected override void OnParametersSet()
     {
         var hi = HisNav.CurrentHistoryIndex;
 
-        if (hi != currentHistoryIndex)
+        if (hi != chi)
         {
-            previousHistoryIndex = currentHistoryIndex;
-            currentHistoryIndex = hi;
+            phi = chi;
+            chi = hi;
         }
     }
 }

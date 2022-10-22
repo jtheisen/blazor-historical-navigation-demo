@@ -1,8 +1,4 @@
 
-function handleLocationChanged() {
-    history.state;
-}
-
 function installNavigationDelegation(navDelegator) {
     let testAnchor;
     function toAbsoluteUri(relativeUri) {
@@ -73,6 +69,11 @@ function installNavigationDelegation(navDelegator) {
         return opensInSameFrame && anchorTarget.hasAttribute('href') && !anchorTarget.hasAttribute('download');
     }
 
+    function shouldUseReplaceForAnchor(anchorTarget) {
+        const style = getComputedStyle(anchorTarget);
+        const value = style.getPropertyValue("--use-replace-on-link-click");
+        return !!value;
+    }
 
     document.body.addEventListener("click", function (event) {
 
@@ -97,7 +98,9 @@ function installNavigationDelegation(navDelegator) {
                 event.preventDefault();
                 event.cancelBubble = true;
 
-                navDelegator.invokeMethodAsync("Navigate", absoluteHref, false);
+                const replace = shouldUseReplaceForAnchor(anchorTarget);
+
+                navDelegator.invokeMethodAsync("Navigate", absoluteHref, replace);
             }
         }
     })

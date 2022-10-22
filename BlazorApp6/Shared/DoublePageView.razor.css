@@ -20,6 +20,10 @@
             transform: translateX(calc((100% + var(--page-gap)) * var(--page-offset)));
         }
 
+        .double-page > .inner > .previous-page {
+            --use-replace-on-link-click: 1;
+        }
+
     .double-page > .inner.move-right-0 {
         animation-name: move-right-0;
     }

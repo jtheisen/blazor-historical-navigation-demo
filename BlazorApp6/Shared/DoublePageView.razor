@@ -8,7 +8,9 @@
 
             var rd = i == chi ? HisNav.SetCurrentRouteData(RouteData) : HisNav.GetRelativeRoutData(offset);
 
-            <div @key="@i" class="flex-1" style="--page-offset: @offset">
+            var className = i == chi - 1 ? "previous-page" : "";
+
+            <div @key="@i" class="@className" style="--page-offset: @offset">
                 @if (rd != null)
                 {
                     <RouteView RouteData="@rd" />

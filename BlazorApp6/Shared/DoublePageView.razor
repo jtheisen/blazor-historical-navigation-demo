@@ -1,0 +1,25 @@
+﻿@inject HistoricalNavigator HisNav
+
+<div class="d-flex gap-4">
+    @{
+        var hi = HisNav.CurrentHistoryIndex;
+    }
+
+    @for (var i = hi - 1; i <= hi; ++i)
+    {
+        var rd = i == hi ? HisNav.SetCurrentRouteData(RouteData) : HisNav.GetPreviousRoutData();
+
+        <div @key="@i" class="flex-1">
+            @if (rd != null)
+            {
+                <div>@i</div>
+                <RouteView RouteData="@rd" />
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public RouteData? RouteData { get; set; } = null!;
+}

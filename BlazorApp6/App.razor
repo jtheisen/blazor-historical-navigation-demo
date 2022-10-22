@@ -1,26 +1,8 @@
-﻿@inject HistoricalNavigator HisNav
-
+﻿
 <Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
         <MainLayout>
-            <div class="d-flex gap-4">
-                @{
-                    var hi = HisNav.CurrentHistoryIndex;
-                }
-
-                @for (var i = hi - 1; i <= hi; ++i)
-                {
-                    var rd = i == hi ? HisNav.SetCurrentRouteData(routeData) : HisNav.GetPreviousRoutData();
-
-                    <div @key="@i" class="flex-fill">
-                        @if (rd != null)
-                        {
-                            <div>@i</div>
-                            <RouteView RouteData="@rd" />
-                        }
-                    </div>
-                }
-            </div>
+            <DoublePageView RouteData="@routeData" />
         </MainLayout>
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
     </Found>

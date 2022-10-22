@@ -44,8 +44,10 @@ public class HistoricalNavigator : INotifyPropertyChanged
         }
     }
 
-    public RouteData SetCurrentRouteData(RouteData routeData)
+    public RouteData SetCurrentRouteData(RouteData? routeData)
     {
+        if (routeData == null) return null;
+
         var i = CurrentHistoryIndex;
 
         EnsureHistorySlot(i);
